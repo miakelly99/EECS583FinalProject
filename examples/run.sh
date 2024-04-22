@@ -5,7 +5,7 @@
 # where <benchmark_name> = simple OR anagram OR compress
 
 # ACTION REQUIRED: Ensure that the path to the library and pass name are correct.
-PATH2LIB="../build/hw1pass/HW1Pass.so"
+PATH2LIB="../hw1pass/HW1Pass.so"
 PASS=hw1
 
 BENCH=src/${1}.c

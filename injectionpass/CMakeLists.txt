@@ -1,0 +1,1 @@
+add_llvm_pass_plugin(InjectionPass injectionpass.cpp)
