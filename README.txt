@@ -18,6 +18,8 @@ where iteration represents which iteration of the instruction to execute the inj
 and bit_1 bit_2 ... is the bit numbers you want to flip during that injection (1 meaning rightmost bit, 32 being leftmost bit).
 
 For example, (1 4 2 1) would represent an injection on the first execution of the instruction that flips bits 4,2, and 1.
+Note that multiple injections can be included by simply adding the next one in the same line.
+Note, however, if two injections have the same iteration number specified, only the rightmost one will be executed (they are not combined into one "larger" injection)
 
 If an instruction should not have any faults attatched to it, simply put -1 to indicate that no faults are present.
 

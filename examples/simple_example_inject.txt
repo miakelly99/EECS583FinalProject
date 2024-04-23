@@ -5,7 +5,7 @@
 "  %10 = load i32, i32* %2, align 4"	(32 bits) : 	-1
 "  %11 = load i32, i32* %1, align 4"	(32 bits) : 	-1
 "  %13 = load i32, i32* %2, align 4"	(32 bits) : 	-1
-"  %14 = load i32, i32* %1, align 4"	(32 bits) : 	-1
+"  %14 = load i32, i32* %1, align 4"	(32 bits) : 	(1 4 2 1) (2 3 7 19)
 "  %16 = load i32, i32* %1, align 4"	(32 bits) : 	-1
 "  %17 = load i32, i32* %1, align 4"	(32 bits) : 	-1
 "  %19 = load i32, i32* %1, align 4"	(32 bits) : 	-1
