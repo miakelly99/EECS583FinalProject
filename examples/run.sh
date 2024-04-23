@@ -17,3 +17,4 @@ echo "Output of original program\n"
 echo "Output of fault-injected program\n"
 ./${1}_inject
 
+rm ${1}.bc ${1}_injected.bc ${1}_no_inject ${1}_inject

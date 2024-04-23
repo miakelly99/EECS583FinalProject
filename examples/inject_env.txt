@@ -1,3 +1,4 @@
 0
-1
 simple_template.txt
+1
+simple_example_inject.txt
