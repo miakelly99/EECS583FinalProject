@@ -19,16 +19,20 @@ struct ChecksumPass : public PassInfoMixin<ChecksumPass> {
 
   std::map<Value*, int> checksums;
 
-  int recomputeChecksum(StoreInst *storeInst) {
-
+  int computeChecksum(Value *val) {
+    int checksum = 0;
+    if (auto *constInt = dyn_cast<ConstantInt>(val)) {
+        // If the value is a constant integer (which should be)
+        checksum = constInt->getZExtValue();
+    } else if (auto *arg = dyn_cast<Argument>(val)) {
+        checksum = reinterpret_cast<std::uintptr_t>(arg);
+    }
+    return checksum;
   }
 
-  void storeChecksum(int checksum) {
-    // Assuming you have a specific location or a variable to store the checksum
-    // Here we need a pointer to where we'll store it, which should be determined by the program's logic
-    
+  void storeChecksum(int checksum, Value *value) {
+    checksums[value] = checksum;
   }
-
 
   PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
 
@@ -40,57 +44,50 @@ struct ChecksumPass : public PassInfoMixin<ChecksumPass> {
 
         // loop through instructions in basic block
         for (Instruction &instr : block) {
-          
-          // Instruction builder at current instruction
-          IRBuilder<> builder(&instr);
 
-          // Print each instruction for debugging
-          instr.print(llvm::outs());
+          instr.print(errs());
           errs() << "\n";
 
           // After each store, recompute checksum
           if (StoreInst *storeInst = dyn_cast<StoreInst>(&instr)) {
 
-            // Compute checksum
+            // Compute info
+            Value *storedValue = storeInst->getOperand(0);
+            Value *storeLocation = storeInst->getPointerOperand();
 
+            // Compute checksum 
+            int checksum = computeChecksum(storedValue);
             // Store checksum
-
-            // Get the value being stored, which is the first operand in a StoreInst
-            llvm::Value* storedValue = storeInst->getOperand(0); // Value to be stored
-            llvm::Value* pointerOperand = storeInst->getOperand(1); // Pointer to the memory location
-
-            // Print the value being stored using LLVM's raw_ostream
-            llvm::errs() << "Stored Value: ";
-            storedValue->print(llvm::errs());
-            llvm::errs() << "\n";
-
-            // Print the pointer operand
-            llvm::errs() << "Pointer Operand: ";
-            pointerOperand->print(llvm::errs());
-            llvm::errs() << "\n";
-
+            checksums[storeLocation] = checksum;
           }
 
           // Begin each each, verify checksum
           if (LoadInst *loadInst = dyn_cast<LoadInst>(&instr)) {
-            llvm::Value* pointerOperand = loadInst->getPointerOperand();
 
-            // Print it using LLVM's raw_ostream
-            llvm::errs() << "Pointer Operand: ";
-            pointerOperand->print(llvm::errs());
-            llvm::errs() << "\n";
+            Value *loadedValue = loadInst->getPointerOperand();
 
-            // retrieve checksum
+            auto it = checksums.find(loadedValue);
+            if (it != checksums.end()) {
+                int storedChecksum = it->second;
 
-            // compute checksum for current value
+                // NEED TO FIX
+                int currentChecksum = 0;
 
-            // compare the two
+                // Print the checksum values for comparison
+                errs() << "Load Instruction";
+                errs() << " | Stored Checksum: " << storedChecksum << " | Current Checksum: " << currentChecksum << "\n";
+
+                if (currentChecksum != storedChecksum) {
+                    errs() << "Checksum mismatch detected. Potential data corruption.\n";
+                }
+            } else {
+                errs() << "No checksum recorded for loaded value.\n";
+            }
 
           }
         }
       }
   }
-
     return PreservedAnalyses::all();
   }
 };
