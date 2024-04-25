@@ -6,7 +6,10 @@
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/Support/Format.h"
 #include "llvm/IR/IRBuilder.h"
+#include "llvm/IR/Instruction.h"
+#include "llvm/IR/Instructions.h"
 #include  <iostream>
+#include <map>
 
 using namespace llvm;
 
@@ -14,50 +17,18 @@ namespace {
 
 struct ChecksumPass : public PassInfoMixin<ChecksumPass> {
 
-  Value* recomputeChecksum(Value* data, IRBuilder<>& builder) {
+  std::map<Value*, int> checksums;
 
-    ConstantInt* xorValue = builder.getInt32(0xff); // Example constant
-    return builder.CreateXor(data, xorValue, "checksumXor");
+  int recomputeChecksum(StoreInst *storeInst) {
+
   }
 
-  void storeChecksum(Value* checksum, IRBuilder<>& builder) {
+  void storeChecksum(int checksum) {
     // Assuming you have a specific location or a variable to store the checksum
     // Here we need a pointer to where we'll store it, which should be determined by the program's logic
-    Module* M = builder.GetInsertBlock()->getModule();
-    LLVMContext& Context = M->getContext();
-    GlobalVariable* checksumStorage = new GlobalVariable(
-        *M,                                  // Module where this global variable will be added
-        Type::getInt32Ty(Context),           // Variable type, assuming int32 for this example
-        false,                               // isConstant
-        GlobalValue::ExternalLinkage,        // Linkage
-        ConstantInt::get(Type::getInt32Ty(Context), 0), // Initializer
-        "checksumStorage"                    // Variable name
-    );
-    builder.CreateStore(checksum, checksumStorage);
+    
   }
 
-  Value* retrieveChecksum(Instruction* loadInst, IRBuilder<>& builder) {
-    // Assuming checksum is stored in a known location linked to data
-    GlobalVariable* checksumStorage = builder.GetInsertBlock()->getModule()->getGlobalVariable("checksumStorage", true);
-    return builder.CreateLoad(checksumStorage->getValueType(), checksumStorage, "loadChecksum");
-  } 
-
-  void compareChecksums(Value* storedChecksum, Value* computedChecksum, IRBuilder<>& builder) {
-    // Create a comparison instruction
-    if (storedChecksum && computedChecksum) {
-      errs() << "Type of storedChecksum: ";
-      storedChecksum->getType()->print(errs());
-      errs() << "\nType of computedChecksum: ";
-      computedChecksum->getType()->print(errs());
-      errs() << "\n";
-    } else {
-      errs() << "Null value detected: storedChecksum or computedChecksum is nullptr\n";
-    }
-
-    Value* isEqual = builder.CreateICmpEQ(storedChecksum, computedChecksum, "checksumCompare");
-    // You might want to add code to handle the case where checksums do not match
-    // For example, you can insert a branch that leads to an error handling block
-  } 
 
   PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
 
@@ -78,33 +49,42 @@ struct ChecksumPass : public PassInfoMixin<ChecksumPass> {
           errs() << "\n";
 
           // After each store, recompute checksum
-          if (auto *storeInst = dyn_cast<StoreInst>(&instr)) {
-
-            // Get value
-            Value *address_of_store = storeInst->getValueOperand(0);
+          if (StoreInst *storeInst = dyn_cast<StoreInst>(&instr)) {
 
             // Compute checksum
-            Value *checksum = recomputeChecksum(storedValue, builder);
 
             // Store checksum
-            storeChecksum(checksum, builder);
+
+            // Get the value being stored, which is the first operand in a StoreInst
+            llvm::Value* storedValue = storeInst->getOperand(0); // Value to be stored
+            llvm::Value* pointerOperand = storeInst->getOperand(1); // Pointer to the memory location
+
+            // Print the value being stored using LLVM's raw_ostream
+            llvm::errs() << "Stored Value: ";
+            storedValue->print(llvm::errs());
+            llvm::errs() << "\n";
+
+            // Print the pointer operand
+            llvm::errs() << "Pointer Operand: ";
+            pointerOperand->print(llvm::errs());
+            llvm::errs() << "\n";
 
           }
 
           // Begin each each, verify checksum
-          if (auto *loadInst = dyn_cast<LoadInst>(&instr)) {
+          if (LoadInst *loadInst = dyn_cast<LoadInst>(&instr)) {
+            llvm::Value* pointerOperand = loadInst->getPointerOperand();
 
-            // For load instructions, retrieve the stored value
-            Value *loadedValue = loadInst->getPointerOperand();
+            // Print it using LLVM's raw_ostream
+            llvm::errs() << "Pointer Operand: ";
+            pointerOperand->print(llvm::errs());
+            llvm::errs() << "\n";
 
-            // Retrieve the stored checksum
-            Value *storedChecksum = retrieveChecksum(loadInst, builder);
+            // retrieve checksum
 
-            // Recompute checksum of the loaded value
-            Value *recomputedChecksum = recomputeChecksum(loadedValue, builder);
+            // compute checksum for current value
 
-            // Compare checksums
-            compareChecksums(storedChecksum, recomputedChecksum, builder);
+            // compare the two
 
           }
         }
