@@ -23,13 +23,13 @@ ln -sf input/compress.in
 fi
 
 # Convert source code to bitcode (IR).
-clang -emit-llvm -c ${BENCH} -Xclang -disable-O0-optnone -o ${1}.bc -Wno-deprecated-non-prototype
+clang -emit-llvm -c ${BENCH} -Xclang -disable-O0-optnone -o ${1}.bc -Wno-deprecated-non-prototype -g
 
 # Instrument profiler passes. Generates profile data.
 opt -passes='pgo-instr-gen,instrprof' ${1}.bc -o ${1}.prof.bc
 
 # Generate binary executable with profiler embedded
-clang -fprofile-instr-generate ${1}.prof.bc -o ${1}_prof
+clang -fprofile-instr-generate ${1}.prof.bc -o ${1}_prof -g
 
 # When we run the profiler embedded executable, it generates a default.profraw file that contains the profile data.
 if [ "${1}" = "anagram" ]; then 
