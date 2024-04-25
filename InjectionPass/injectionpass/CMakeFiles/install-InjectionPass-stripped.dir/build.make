@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/miakelly/EECS583FinalProject
+CMAKE_SOURCE_DIR = /home/miakelly/EECS583FinalProject/InjectionPass
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/miakelly/EECS583FinalProject
+CMAKE_BINARY_DIR = /home/miakelly/EECS583FinalProject/InjectionPass
 
 # Utility rule file for install-InjectionPass-stripped.
 
@@ -67,7 +67,7 @@ include injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/compiler_dep
 include injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/progress.make
 
 injectionpass/CMakeFiles/install-InjectionPass-stripped:
-	cd /home/miakelly/EECS583FinalProject/injectionpass && /usr/bin/cmake -DCMAKE_INSTALL_COMPONENT="InjectionPass" -DCMAKE_INSTALL_DO_STRIP=1 -P /home/miakelly/EECS583FinalProject/cmake_install.cmake
+	cd /home/miakelly/EECS583FinalProject/InjectionPass/injectionpass && /usr/bin/cmake -DCMAKE_INSTALL_COMPONENT="InjectionPass" -DCMAKE_INSTALL_DO_STRIP=1 -P /home/miakelly/EECS583FinalProject/InjectionPass/cmake_install.cmake
 
 install-InjectionPass-stripped: injectionpass/CMakeFiles/install-InjectionPass-stripped
 install-InjectionPass-stripped: injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/build.make
@@ -78,10 +78,10 @@ injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/build: install-Injec
 .PHONY : injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/build
 
 injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/clean:
-	cd /home/miakelly/EECS583FinalProject/injectionpass && $(CMAKE_COMMAND) -P CMakeFiles/install-InjectionPass-stripped.dir/cmake_clean.cmake
+	cd /home/miakelly/EECS583FinalProject/InjectionPass/injectionpass && $(CMAKE_COMMAND) -P CMakeFiles/install-InjectionPass-stripped.dir/cmake_clean.cmake
 .PHONY : injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/clean
 
 injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/depend:
-	cd /home/miakelly/EECS583FinalProject && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/miakelly/EECS583FinalProject /home/miakelly/EECS583FinalProject/injectionpass /home/miakelly/EECS583FinalProject /home/miakelly/EECS583FinalProject/injectionpass /home/miakelly/EECS583FinalProject/injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/miakelly/EECS583FinalProject/InjectionPass /home/miakelly/EECS583FinalProject/InjectionPass/injectionpass /home/miakelly/EECS583FinalProject/InjectionPass /home/miakelly/EECS583FinalProject/InjectionPass/injectionpass /home/miakelly/EECS583FinalProject/InjectionPass/injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/depend
 

@@ -1,5 +1,5 @@
 injectionpass/CMakeFiles/InjectionPass.dir/injectionpass.cpp.o: \
-  /home/miakelly/EECS583FinalProject/injectionpass/injectionpass.cpp \
+  /home/miakelly/EECS583FinalProject/InjectionPass/injectionpass/injectionpass.cpp \
   /usr/lib/llvm-14/include/llvm/IR/CFG.h \
   /usr/lib/llvm-14/include/llvm/ADT/GraphTraits.h \
   /usr/lib/llvm-14/include/llvm/ADT/iterator_range.h \

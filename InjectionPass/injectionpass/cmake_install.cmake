@@ -1,4 +1,4 @@
-# Install script for directory: /home/miakelly/EECS583FinalProject/injectionpass
+# Install script for directory: /home/miakelly/EECS583FinalProject/InjectionPass/injectionpass
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -43,7 +43,7 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xInjectionPassx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE MODULE FILES "/home/miakelly/EECS583FinalProject/injectionpass/InjectionPass.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE MODULE FILES "/home/miakelly/EECS583FinalProject/InjectionPass/injectionpass/InjectionPass.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/InjectionPass.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/InjectionPass.so")
     if(CMAKE_INSTALL_DO_STRIP)

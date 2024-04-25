@@ -1,4 +1,4 @@
 0
-simple_template.txt
+super_simple_checksum_template.txt
 1
-simple_example_inject.txt
+simple_checksum_inject.txt

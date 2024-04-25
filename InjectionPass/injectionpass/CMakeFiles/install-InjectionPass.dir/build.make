@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/miakelly/EECS583FinalProject
+CMAKE_SOURCE_DIR = /home/miakelly/EECS583FinalProject/InjectionPass
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/miakelly/EECS583FinalProject
+CMAKE_BINARY_DIR = /home/miakelly/EECS583FinalProject/InjectionPass
 
 # Utility rule file for install-InjectionPass.
 
@@ -67,7 +67,7 @@ include injectionpass/CMakeFiles/install-InjectionPass.dir/compiler_depend.make
 include injectionpass/CMakeFiles/install-InjectionPass.dir/progress.make
 
 injectionpass/CMakeFiles/install-InjectionPass:
-	cd /home/miakelly/EECS583FinalProject/injectionpass && /usr/bin/cmake -DCMAKE_INSTALL_COMPONENT="InjectionPass" -P /home/miakelly/EECS583FinalProject/cmake_install.cmake
+	cd /home/miakelly/EECS583FinalProject/InjectionPass/injectionpass && /usr/bin/cmake -DCMAKE_INSTALL_COMPONENT="InjectionPass" -P /home/miakelly/EECS583FinalProject/InjectionPass/cmake_install.cmake
 
 install-InjectionPass: injectionpass/CMakeFiles/install-InjectionPass
 install-InjectionPass: injectionpass/CMakeFiles/install-InjectionPass.dir/build.make
@@ -78,10 +78,10 @@ injectionpass/CMakeFiles/install-InjectionPass.dir/build: install-InjectionPass
 .PHONY : injectionpass/CMakeFiles/install-InjectionPass.dir/build
 
 injectionpass/CMakeFiles/install-InjectionPass.dir/clean:
-	cd /home/miakelly/EECS583FinalProject/injectionpass && $(CMAKE_COMMAND) -P CMakeFiles/install-InjectionPass.dir/cmake_clean.cmake
+	cd /home/miakelly/EECS583FinalProject/InjectionPass/injectionpass && $(CMAKE_COMMAND) -P CMakeFiles/install-InjectionPass.dir/cmake_clean.cmake
 .PHONY : injectionpass/CMakeFiles/install-InjectionPass.dir/clean
 
 injectionpass/CMakeFiles/install-InjectionPass.dir/depend:
-	cd /home/miakelly/EECS583FinalProject && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/miakelly/EECS583FinalProject /home/miakelly/EECS583FinalProject/injectionpass /home/miakelly/EECS583FinalProject /home/miakelly/EECS583FinalProject/injectionpass /home/miakelly/EECS583FinalProject/injectionpass/CMakeFiles/install-InjectionPass.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/miakelly/EECS583FinalProject/InjectionPass /home/miakelly/EECS583FinalProject/InjectionPass/injectionpass /home/miakelly/EECS583FinalProject/InjectionPass /home/miakelly/EECS583FinalProject/InjectionPass/injectionpass /home/miakelly/EECS583FinalProject/InjectionPass/injectionpass/CMakeFiles/install-InjectionPass.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : injectionpass/CMakeFiles/install-InjectionPass.dir/depend
 

@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/miakelly/EECS583FinalProject
+CMAKE_SOURCE_DIR = /home/miakelly/EECS583FinalProject/InjectionPass
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/miakelly/EECS583FinalProject
+CMAKE_BINARY_DIR = /home/miakelly/EECS583FinalProject/InjectionPass
 
 # Utility rule file for acc_gen.
 
@@ -78,6 +78,6 @@ CMakeFiles/acc_gen.dir/clean:
 .PHONY : CMakeFiles/acc_gen.dir/clean
 
 CMakeFiles/acc_gen.dir/depend:
-	cd /home/miakelly/EECS583FinalProject && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/miakelly/EECS583FinalProject /home/miakelly/EECS583FinalProject /home/miakelly/EECS583FinalProject /home/miakelly/EECS583FinalProject /home/miakelly/EECS583FinalProject/CMakeFiles/acc_gen.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/miakelly/EECS583FinalProject/InjectionPass /home/miakelly/EECS583FinalProject/InjectionPass /home/miakelly/EECS583FinalProject/InjectionPass /home/miakelly/EECS583FinalProject/InjectionPass /home/miakelly/EECS583FinalProject/InjectionPass/CMakeFiles/acc_gen.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/acc_gen.dir/depend
 

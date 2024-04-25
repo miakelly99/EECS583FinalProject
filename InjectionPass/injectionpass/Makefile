@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/miakelly/EECS583FinalProject
+CMAKE_SOURCE_DIR = /home/miakelly/EECS583FinalProject/InjectionPass
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/miakelly/EECS583FinalProject
+CMAKE_BINARY_DIR = /home/miakelly/EECS583FinalProject/InjectionPass
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,14 +132,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/miakelly/EECS583FinalProject && $(CMAKE_COMMAND) -E cmake_progress_start /home/miakelly/EECS583FinalProject/CMakeFiles /home/miakelly/EECS583FinalProject/injectionpass//CMakeFiles/progress.marks
-	cd /home/miakelly/EECS583FinalProject && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 injectionpass/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/miakelly/EECS583FinalProject/CMakeFiles 0
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(CMAKE_COMMAND) -E cmake_progress_start /home/miakelly/EECS583FinalProject/InjectionPass/CMakeFiles /home/miakelly/EECS583FinalProject/InjectionPass/injectionpass//CMakeFiles/progress.marks
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 injectionpass/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/miakelly/EECS583FinalProject/InjectionPass/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/miakelly/EECS583FinalProject && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 injectionpass/clean
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 injectionpass/clean
 .PHONY : clean
 
 # The main clean target
@@ -148,22 +148,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/miakelly/EECS583FinalProject && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 injectionpass/preinstall
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 injectionpass/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/miakelly/EECS583FinalProject && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 injectionpass/preinstall
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 injectionpass/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/miakelly/EECS583FinalProject && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 injectionpass/CMakeFiles/InjectionPass.dir/rule:
-	cd /home/miakelly/EECS583FinalProject && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 injectionpass/CMakeFiles/InjectionPass.dir/rule
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 injectionpass/CMakeFiles/InjectionPass.dir/rule
 .PHONY : injectionpass/CMakeFiles/InjectionPass.dir/rule
 
 # Convenience name for target.
@@ -172,12 +172,12 @@ InjectionPass: injectionpass/CMakeFiles/InjectionPass.dir/rule
 
 # fast build rule for target.
 InjectionPass/fast:
-	cd /home/miakelly/EECS583FinalProject && $(MAKE) $(MAKESILENT) -f injectionpass/CMakeFiles/InjectionPass.dir/build.make injectionpass/CMakeFiles/InjectionPass.dir/build
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(MAKE) $(MAKESILENT) -f injectionpass/CMakeFiles/InjectionPass.dir/build.make injectionpass/CMakeFiles/InjectionPass.dir/build
 .PHONY : InjectionPass/fast
 
 # Convenience name for target.
 injectionpass/CMakeFiles/install-InjectionPass.dir/rule:
-	cd /home/miakelly/EECS583FinalProject && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 injectionpass/CMakeFiles/install-InjectionPass.dir/rule
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 injectionpass/CMakeFiles/install-InjectionPass.dir/rule
 .PHONY : injectionpass/CMakeFiles/install-InjectionPass.dir/rule
 
 # Convenience name for target.
@@ -186,12 +186,12 @@ install-InjectionPass: injectionpass/CMakeFiles/install-InjectionPass.dir/rule
 
 # fast build rule for target.
 install-InjectionPass/fast:
-	cd /home/miakelly/EECS583FinalProject && $(MAKE) $(MAKESILENT) -f injectionpass/CMakeFiles/install-InjectionPass.dir/build.make injectionpass/CMakeFiles/install-InjectionPass.dir/build
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(MAKE) $(MAKESILENT) -f injectionpass/CMakeFiles/install-InjectionPass.dir/build.make injectionpass/CMakeFiles/install-InjectionPass.dir/build
 .PHONY : install-InjectionPass/fast
 
 # Convenience name for target.
 injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/rule:
-	cd /home/miakelly/EECS583FinalProject && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/rule
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/rule
 .PHONY : injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/rule
 
 # Convenience name for target.
@@ -200,7 +200,7 @@ install-InjectionPass-stripped: injectionpass/CMakeFiles/install-InjectionPass-s
 
 # fast build rule for target.
 install-InjectionPass-stripped/fast:
-	cd /home/miakelly/EECS583FinalProject && $(MAKE) $(MAKESILENT) -f injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/build.make injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/build
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(MAKE) $(MAKESILENT) -f injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/build.make injectionpass/CMakeFiles/install-InjectionPass-stripped.dir/build
 .PHONY : install-InjectionPass-stripped/fast
 
 injectionpass.o: injectionpass.cpp.o
@@ -208,7 +208,7 @@ injectionpass.o: injectionpass.cpp.o
 
 # target to build an object file
 injectionpass.cpp.o:
-	cd /home/miakelly/EECS583FinalProject && $(MAKE) $(MAKESILENT) -f injectionpass/CMakeFiles/InjectionPass.dir/build.make injectionpass/CMakeFiles/InjectionPass.dir/injectionpass.cpp.o
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(MAKE) $(MAKESILENT) -f injectionpass/CMakeFiles/InjectionPass.dir/build.make injectionpass/CMakeFiles/InjectionPass.dir/injectionpass.cpp.o
 .PHONY : injectionpass.cpp.o
 
 injectionpass.i: injectionpass.cpp.i
@@ -216,7 +216,7 @@ injectionpass.i: injectionpass.cpp.i
 
 # target to preprocess a source file
 injectionpass.cpp.i:
-	cd /home/miakelly/EECS583FinalProject && $(MAKE) $(MAKESILENT) -f injectionpass/CMakeFiles/InjectionPass.dir/build.make injectionpass/CMakeFiles/InjectionPass.dir/injectionpass.cpp.i
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(MAKE) $(MAKESILENT) -f injectionpass/CMakeFiles/InjectionPass.dir/build.make injectionpass/CMakeFiles/InjectionPass.dir/injectionpass.cpp.i
 .PHONY : injectionpass.cpp.i
 
 injectionpass.s: injectionpass.cpp.s
@@ -224,7 +224,7 @@ injectionpass.s: injectionpass.cpp.s
 
 # target to generate assembly for a file
 injectionpass.cpp.s:
-	cd /home/miakelly/EECS583FinalProject && $(MAKE) $(MAKESILENT) -f injectionpass/CMakeFiles/InjectionPass.dir/build.make injectionpass/CMakeFiles/InjectionPass.dir/injectionpass.cpp.s
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(MAKE) $(MAKESILENT) -f injectionpass/CMakeFiles/InjectionPass.dir/build.make injectionpass/CMakeFiles/InjectionPass.dir/injectionpass.cpp.s
 .PHONY : injectionpass.cpp.s
 
 # Help Target
@@ -256,6 +256,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/miakelly/EECS583FinalProject && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/miakelly/EECS583FinalProject/InjectionPass && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

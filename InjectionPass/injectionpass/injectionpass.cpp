@@ -156,22 +156,22 @@ struct InjectionPass : public PassInfoMixin<InjectionPass> {
         ConstantInt* const_one_val = ConstantInt::get(F.getContext(), APInt(32,1));
         ConstantInt* const_max_injection_number = ConstantInt::get(F.getContext(), APInt(32, num_injections));
 
-        GlobalVariable* iteration_number = new GlobalVariable(M, iteration_number_type, false, GlobalValue::InternalLinkage, nullptr, "");
+        GlobalVariable* iteration_number = new GlobalVariable(M, iteration_number_type, false, GlobalValue::InternalLinkage, nullptr, "iteration_number");
         iteration_number->setAlignment(Align());
         iteration_number->setInitializer(const_zero_val);
 
-        GlobalVariable* injection_index = new GlobalVariable(M, injection_index_type, false, GlobalValue::InternalLinkage, nullptr, "");
+        GlobalVariable* injection_index = new GlobalVariable(M, injection_index_type, false, GlobalValue::InternalLinkage, nullptr, "injection_index");
         injection_index->setAlignment(Align());
         injection_index->setInitializer(const_zero_val);
 
-        GlobalVariable* injection_index_max = new GlobalVariable(M, injection_index_type, false, GlobalValue::InternalLinkage, nullptr, "");
+        GlobalVariable* injection_index_max = new GlobalVariable(M, injection_index_type, false, GlobalValue::InternalLinkage, nullptr, "injection_index_max");
         injection_index_max->setAlignment(Align());
         injection_index_max->setInitializer(const_max_injection_number);
 
-        GlobalVariable* iteration_number_array = new GlobalVariable(M, iteration_array_type, false, GlobalValue::InternalLinkage, nullptr, "");
+        GlobalVariable* iteration_number_array = new GlobalVariable(M, iteration_array_type, false, GlobalValue::InternalLinkage, nullptr, "iteration_number_array");
         iteration_number_array->setAlignment(Align());
 
-        GlobalVariable* injection_array = new GlobalVariable(M, inject_array_type, false, GlobalValue::InternalLinkage, nullptr, "");
+        GlobalVariable* injection_array = new GlobalVariable(M, inject_array_type, false, GlobalValue::InternalLinkage, nullptr, "injection_array");
         injection_array->setAlignment(Align());
 
         std::vector<Constant*> iteration_numbers;
@@ -241,6 +241,8 @@ struct InjectionPass : public PassInfoMixin<InjectionPass> {
       }
     }
     template_file.close();
+
+    //errs() << M << "\n";
     return PreservedAnalyses::all();
   }
 };
