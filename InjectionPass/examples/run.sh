@@ -12,9 +12,21 @@ clang ${1}.bc -o ${1}_no_inject
 clang ${1}_injected.bc -o ${1}_inject
 
 echo "Output of original program\n"
-./${1}_no_inject
+if ./${1}_no_inject; then
+    echo "-------------------------"
+    echo "No transient faults detected :)"
+else
+    echo "-------------------------"
+    echo "Error! Transient faults detected"
+fi
 
 echo "Output of fault-injected program\n"
-./${1}_inject
+if ./${1}_inject; then
+    echo "-------------------------"
+    echo "No transient faults detected :)"
+else
+    echo "-------------------------"
+    echo "Error! Transient faults detected"
+fi
 
 rm ${1}.bc ${1}_injected.bc ${1}_no_inject ${1}_inject
