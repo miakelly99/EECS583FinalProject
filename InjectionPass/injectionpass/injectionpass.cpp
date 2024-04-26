@@ -115,12 +115,12 @@ struct InjectionPass : public PassInfoMixin<InjectionPass> {
 
     std::map<unsigned int, Instruction*> index_to_instruction;
 
+    unsigned int index = 1;
 	  for (Function &F: M.getFunctionList())
     {
       std::list<LoadInst*> load_insts;
       for (BasicBlock& BB: F)
       {
-        unsigned int index = 1;
         for (Instruction &inst: BB)
         {
           Value* V = (Value*) &inst;
@@ -136,7 +136,7 @@ struct InjectionPass : public PassInfoMixin<InjectionPass> {
           {
             std::string instr_str;
             llvm::raw_string_ostream(instr_str) << inst;
-            template_file << std::setw(5) << index << " ----> ";
+            template_file << index << " ----> ";
             std::string default_val;
             if (load)
             {
@@ -219,14 +219,12 @@ struct InjectionPass : public PassInfoMixin<InjectionPass> {
           if (instruction_num != 0)
           {
             Instruction* remote_location = index_to_instruction[instruction_num];
-
             if (remote_location != load_inst)
             {
               PointerType* data_ptr_type = PointerType::get(load_inst->getType(), 0);
               GlobalVariable* pointer = new GlobalVariable(M, data_ptr_type, false, GlobalValue::InternalLinkage, nullptr, "remote_injection_ptr");
               pointer->setAlignment(Align());
               pointer->setInitializer(ConstantPointerNull::get(data_ptr_type));
-              
               Instruction* remote_load_ptr = new LoadInst(data_ptr_type, pointer, "", remote_location);
               LoadInst* remote_load_value = new LoadInst(load_inst->getType(), remote_load_ptr, "", remote_load_ptr->getNextNode());
               Instruction* update_remote_ptr = new StoreInst(load_inst->getPointerOperand(), pointer, "", load_inst->getNextNode());

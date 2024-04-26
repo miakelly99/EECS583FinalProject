@@ -1,9 +1,36 @@
-"  %6 = load i32, i32* %2, align 4"	(32 bits) : 	-1
-"  %10 = load i32, i32* %3, align 4"	(32 bits) : 	-1
-"  %11 = load i32, i32* %2, align 4"	(32 bits) : 	-1
-"  %14 = load i32, i32* %2, align 4"	(32 bits) : 	-1
-"  %15 = load i32, i32* %3, align 4"	(32 bits) : 	-1
-"  %17 = load i32, i32* %4, align 4"	(32 bits) : 	-1
-"  %20 = load i32, i32* %3, align 4"	(32 bits) : 	-1
-"  %24 = load i32, i32* %2, align 4"	(32 bits) : 	-1
-"  %27 = load i32, i32* %4, align 4"	(32 bits) : 	-1
+1 ----> (NOLD) 	"  %1 = alloca i32, align 4                        "      (32 bits)   : 	INVALID
+2 ----> (NOLD) 	"  %2 = alloca i32, align 4                        "      (32 bits)   : 	INVALID
+3 ----> (NOLD) 	"  %3 = alloca i32, align 4                        "      (32 bits)   : 	INVALID
+4 ----> (NOLD) 	"  %4 = alloca i32, align 4                        "      (32 bits)   : 	INVALID
+5 ----> (NOLD) 	"  store i32 0, i32* %1, align 4                   "      (32 bits)   : 	INVALID
+6 ----> (NOLD) 	"  store i32 0, i32* %4, align 4                   "      (32 bits)   : 	INVALID
+7 ----> (NOLD) 	"  store i32 1, i32* %2, align 4                   "      (32 bits)   : 	INVALID
+8 ----> (NOLD) 	"  br label %5                                     "      (32 bits)   : 	INVALID
+9 ----> (LOAD) 	"  %6 = load i32, i32* %2, align 4                 "      (32 bits)   : 	-1
+10 ----> (NOLD) 	"  %7 = icmp sle i32 %6, 100000                    "      (32 bits)   : 	INVALID
+11 ----> (NOLD) 	"  br i1 %7, label %8, label %26                   "      (32 bits)   : 	INVALID
+12 ----> (NOLD) 	"  store i32 1, i32* %3, align 4                   "      (32 bits)   : 	INVALID
+13 ----> (NOLD) 	"  br label %9                                     "      (32 bits)   : 	INVALID
+14 ----> (LOAD) 	"  %10 = load i32, i32* %3, align 4                "      (32 bits)   : 	-1
+15 ----> (LOAD) 	"  %11 = load i32, i32* %2, align 4                "      (32 bits)   : 	-1
+16 ----> (NOLD) 	"  %12 = icmp sle i32 %10, %11                     "      (32 bits)   : 	INVALID
+17 ----> (NOLD) 	"  br i1 %12, label %13, label %22                 "      (32 bits)   : 	INVALID
+18 ----> (LOAD) 	"  %14 = load i32, i32* %2, align 4                "      (32 bits)   : 	-1
+19 ----> (LOAD) 	"  %15 = load i32, i32* %3, align 4                "      (32 bits)   : 	-1
+20 ----> (NOLD) 	"  %16 = sdiv i32 %14, %15                         "      (32 bits)   : 	INVALID
+21 ----> (LOAD) 	"  %17 = load i32, i32* %4, align 4                "      (32 bits)   : 	-1
+22 ----> (NOLD) 	"  %18 = add nsw i32 %17, %16                      "      (32 bits)   : 	INVALID
+23 ----> (NOLD) 	"  store i32 %18, i32* %4, align 4                 "      (32 bits)   : 	INVALID
+24 ----> (NOLD) 	"  br label %19                                    "      (32 bits)   : 	INVALID
+25 ----> (LOAD) 	"  %20 = load i32, i32* %3, align 4                "      (32 bits)   : 	-1
+26 ----> (NOLD) 	"  %21 = add nsw i32 %20, 1                        "      (32 bits)   : 	INVALID
+27 ----> (NOLD) 	"  store i32 %21, i32* %3, align 4                 "      (32 bits)   : 	INVALID
+28 ----> (NOLD) 	"  br label %9, !llvm.loop !6                      "      (32 bits)   : 	INVALID
+29 ----> (NOLD) 	"  br label %23                                    "      (32 bits)   : 	INVALID
+30 ----> (LOAD) 	"  %24 = load i32, i32* %2, align 4                "      (32 bits)   : 	-1
+31 ----> (NOLD) 	"  %25 = add nsw i32 %24, 1                        "      (32 bits)   : 	INVALID
+32 ----> (NOLD) 	"  store i32 %25, i32* %2, align 4                 "      (32 bits)   : 	INVALID
+33 ----> (NOLD) 	"  br label %5, !llvm.loop !8                      "      (32 bits)   : 	INVALID
+34 ----> (LOAD) 	"  %27 = load i32, i32* %4, align 4                "      (32 bits)   : 	-1
+35 ----> (NOLD) 	"  %28 = call i32 (i8*, ...) @printf(i8* noundef ge"      (32 bits)   : 	INVALID
+36 ----> (NOLD) 	"  ret i32 0                                       "      (32 bits)   : 	INVALID
