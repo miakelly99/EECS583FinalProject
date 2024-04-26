@@ -19,6 +19,7 @@
 #include  <set>
 #include  <map>
 #include  <bits/stdc++.h>
+#include  <iomanip>
 
 using namespace llvm;
 
@@ -135,7 +136,7 @@ struct InjectionPass : public PassInfoMixin<InjectionPass> {
           {
             std::string instr_str;
             llvm::raw_string_ostream(instr_str) << inst;
-            template_file << index << " ----> ";
+            template_file << std::setw(5) << index << " ----> ";
             std::string default_val;
             if (load)
             {
@@ -145,7 +146,7 @@ struct InjectionPass : public PassInfoMixin<InjectionPass> {
               template_file << "(NOLD)";
               default_val = "INVALID";
             }
-            template_file << " \t\"" << instr_str << "\"\t(" << "32" << " bits)" << " : \t" << default_val << "\n";
+            template_file << " \t\"" << std::left << std::setw(50) << instr_str.substr(0, 50) << "\"      (" << "32" << " bits)" << "   : \t" << default_val << "\n";
           }
           index++;
         }

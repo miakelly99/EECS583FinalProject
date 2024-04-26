@@ -1,4 +1,4 @@
-0
-simple_checksum_template.txt
 1
+simple_checksum_template.txt
+0
 simple_checksum_inject.txt
