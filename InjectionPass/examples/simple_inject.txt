@@ -8,7 +8,7 @@
 8 ----> (LOAD) 	"  %5 = load i32, i32* %1, align 4"	(32 bits) : 	-1
 9 ----> (NOLD) 	"  %6 = add nsw i32 %4, %5"	(32 bits) : 	INVALID
 10 ----> (NOLD) 	"  store i32 %6, i32* %1, align 4"	(32 bits) : 	INVALID
-11 ----> (LOAD) 	"  %7 = load i32, i32* %3, align 4"	(32 bits) : 	-1
+11 ----> (LOAD) 	"  %7 = load i32, i32* %3, align 4"	(32 bits) : 	(25 1 1)
 12 ----> (LOAD) 	"  %8 = load i32, i32* %1, align 4"	(32 bits) : 	-1
 13 ----> (NOLD) 	"  %9 = mul nsw i32 %7, %8"	(32 bits) : 	INVALID
 14 ----> (NOLD) 	"  store i32 %9, i32* %2, align 4"	(32 bits) : 	INVALID
