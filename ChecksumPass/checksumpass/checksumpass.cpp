@@ -117,7 +117,7 @@ struct ChecksumPass : public PassInfoMixin<ChecksumPass> {
         Instruction* ret_fail = ReturnInst::Create(F.getContext(), const_one_val, unsafe_block);
         ret_fail->getNextNode()->removeFromParent();
       }
-      //errs() << M << "\n";
+      errs() << M << "\n";
   }
   return PreservedAnalyses::all();
 }};

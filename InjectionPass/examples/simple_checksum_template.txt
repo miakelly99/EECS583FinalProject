@@ -1,41 +1,202 @@
-"  %4 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
-"  %5 = load i32, i32* @local_def, align 4"	(32 bits) : 	-1
-"  %6 = load i32, i32* @global_def, align 4"	(32 bits) : 	-1
-"  %9 = load i32, i32* %2, align 4"	(32 bits) : 	-1
-"  %10 = load i32, i32* %1, align 4"	(32 bits) : 	-1
-"  %11 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
-"  %13 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
-"  %16 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
-"  %17 = load i32, i32* @local_def, align 4"	(32 bits) : 	-1
-"  %18 = load i32, i32* @global_def, align 4"	(32 bits) : 	-1
-"  %21 = load i32, i32* %3, align 4"	(32 bits) : 	-1
-"  %22 = load i32, i32* %1, align 4"	(32 bits) : 	-1
-"  %23 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
-"  %25 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
-"  %28 = load i32, i32* %2, align 4"	(32 bits) : 	-1
-"  %29 = load i32, i32* %1, align 4"	(32 bits) : 	-1
-"  %30 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
-"  %32 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
-"  %35 = load i32, i32* %2, align 4"	(32 bits) : 	-1
-"  %36 = load i32, i32* %1, align 4"	(32 bits) : 	-1
-"  %37 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
-"  %39 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
-"  %42 = load i32, i32* %1, align 4"	(32 bits) : 	-1
-"  %43 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
-"  %45 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
-"  %47 = load i32, i32* %1, align 4"	(32 bits) : 	-1
-"  %48 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
-"  %50 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
-"  %53 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
-"  %54 = load i32, i32* @local_def, align 4"	(32 bits) : 	-1
-"  %55 = load i32, i32* @global_def, align 4"	(32 bits) : 	-1
-"  %58 = load i32, i32* %1, align 4"	(32 bits) : 	-1
-"  %59 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
-"  %61 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
-"  %63 = load i32, i32* %2, align 4"	(32 bits) : 	-1
-"  %64 = load i32, i32* %3, align 4"	(32 bits) : 	-1
-"  %66 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
-"  %67 = load i32, i32* @local_def, align 4"	(32 bits) : 	-1
-"  %68 = load i32, i32* @global_def, align 4"	(32 bits) : 	-1
-"  %71 = load i32, i32* @global_def, align 4"	(32 bits) : 	-1
-"  %72 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
+1 ----> (NOLD) 	"  %1 = alloca i32, align 4"	(32 bits) : 	INVALID
+2 ----> (NOLD) 	"  %2 = alloca i32, align 4"	(32 bits) : 	INVALID
+3 ----> (NOLD) 	"  %3 = alloca i32, align 4"	(32 bits) : 	INVALID
+4 ----> (NOLD) 	"  store i32 5, i32* %1, align 4"	(32 bits) : 	INVALID
+5 ----> (LOAD) 	"  %4 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
+6 ----> (LOAD) 	"  %5 = load i32, i32* @local_def, align 4"	(32 bits) : 	-1
+7 ----> (LOAD) 	"  %6 = load i32, i32* @global_def, align 4"	(32 bits) : 	-1
+8 ----> (NOLD) 	"  %7 = mul i32 %5, %4"	(32 bits) : 	INVALID
+9 ----> (NOLD) 	"  %8 = add i32 %6, %7"	(32 bits) : 	INVALID
+10 ----> (NOLD) 	"  store i32 0, i32* @local_use_number, align 4"	(32 bits) : 	INVALID
+11 ----> (NOLD) 	"  store i32 %8, i32* @global_def, align 4"	(32 bits) : 	INVALID
+12 ----> (NOLD) 	"  store i32 5, i32* @local_def, align 4"	(32 bits) : 	INVALID
+13 ----> (NOLD) 	"  store i32 7, i32* %2, align 4"	(32 bits) : 	INVALID
+14 ----> (LOAD) 	"  %9 = load i32, i32* @local_use_number.2, align 4"	(32 bits) : 	-1
+15 ----> (LOAD) 	"  %10 = load i32, i32* @local_def.1, align 4"	(32 bits) : 	-1
+16 ----> (LOAD) 	"  %11 = load i32, i32* @global_def, align 4"	(32 bits) : 	-1
+17 ----> (NOLD) 	"  %12 = mul i32 %10, %9"	(32 bits) : 	INVALID
+18 ----> (NOLD) 	"  %13 = add i32 %11, %12"	(32 bits) : 	INVALID
+19 ----> (NOLD) 	"  store i32 0, i32* @local_use_number.2, align 4"	(32 bits) : 	INVALID
+20 ----> (NOLD) 	"  store i32 %13, i32* @global_def, align 4"	(32 bits) : 	INVALID
+21 ----> (NOLD) 	"  store i32 7, i32* @local_def.1, align 4"	(32 bits) : 	INVALID
+22 ----> (NOLD) 	"  store i32 10, i32* %3, align 4"	(32 bits) : 	INVALID
+23 ----> (LOAD) 	"  %14 = load i32, i32* @local_use_number.4, align 4"	(32 bits) : 	-1
+24 ----> (LOAD) 	"  %15 = load i32, i32* @local_def.3, align 4"	(32 bits) : 	-1
+25 ----> (LOAD) 	"  %16 = load i32, i32* @global_def, align 4"	(32 bits) : 	-1
+26 ----> (NOLD) 	"  %17 = mul i32 %15, %14"	(32 bits) : 	INVALID
+27 ----> (NOLD) 	"  %18 = add i32 %16, %17"	(32 bits) : 	INVALID
+28 ----> (NOLD) 	"  store i32 0, i32* @local_use_number.4, align 4"	(32 bits) : 	INVALID
+29 ----> (NOLD) 	"  store i32 %18, i32* @global_def, align 4"	(32 bits) : 	INVALID
+30 ----> (NOLD) 	"  store i32 10, i32* @local_def.3, align 4"	(32 bits) : 	INVALID
+31 ----> (LOAD) 	"  %19 = load i32, i32* %2, align 4"	(32 bits) : 	-1
+32 ----> (LOAD) 	"  %20 = load i32, i32* @local_use_number.2, align 4"	(32 bits) : 	-1
+33 ----> (NOLD) 	"  %21 = add i32 %20, 1"	(32 bits) : 	INVALID
+34 ----> (NOLD) 	"  store i32 %21, i32* @local_use_number.2, align 4"	(32 bits) : 	INVALID
+35 ----> (LOAD) 	"  %22 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
+36 ----> (NOLD) 	"  %23 = add i32 %22, %19"	(32 bits) : 	INVALID
+37 ----> (NOLD) 	"  store i32 %23, i32* @global_use, align 4"	(32 bits) : 	INVALID
+38 ----> (LOAD) 	"  %24 = load i32, i32* %1, align 4"	(32 bits) : 	-1
+39 ----> (LOAD) 	"  %25 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
+40 ----> (NOLD) 	"  %26 = add i32 %25, 1"	(32 bits) : 	INVALID
+41 ----> (NOLD) 	"  store i32 %26, i32* @local_use_number, align 4"	(32 bits) : 	INVALID
+42 ----> (LOAD) 	"  %27 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
+43 ----> (NOLD) 	"  %28 = add i32 %27, %24"	(32 bits) : 	INVALID
+44 ----> (NOLD) 	"  store i32 %28, i32* @global_use, align 4"	(32 bits) : 	INVALID
+45 ----> (NOLD) 	"  %29 = add nsw i32 %19, %24"	(32 bits) : 	INVALID
+46 ----> (NOLD) 	"  store i32 %29, i32* %1, align 4"	(32 bits) : 	INVALID
+47 ----> (LOAD) 	"  %30 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
+48 ----> (LOAD) 	"  %31 = load i32, i32* @local_def, align 4"	(32 bits) : 	-1
+49 ----> (LOAD) 	"  %32 = load i32, i32* @global_def, align 4"	(32 bits) : 	-1
+50 ----> (NOLD) 	"  %33 = mul i32 %31, %30"	(32 bits) : 	INVALID
+51 ----> (NOLD) 	"  %34 = add i32 %32, %33"	(32 bits) : 	INVALID
+52 ----> (NOLD) 	"  store i32 0, i32* @local_use_number, align 4"	(32 bits) : 	INVALID
+53 ----> (NOLD) 	"  store i32 %34, i32* @global_def, align 4"	(32 bits) : 	INVALID
+54 ----> (NOLD) 	"  store i32 %29, i32* @local_def, align 4"	(32 bits) : 	INVALID
+55 ----> (LOAD) 	"  %35 = load i32, i32* %3, align 4"	(32 bits) : 	-1
+56 ----> (LOAD) 	"  %36 = load i32, i32* @local_use_number.4, align 4"	(32 bits) : 	-1
+57 ----> (NOLD) 	"  %37 = add i32 %36, 1"	(32 bits) : 	INVALID
+58 ----> (NOLD) 	"  store i32 %37, i32* @local_use_number.4, align 4"	(32 bits) : 	INVALID
+59 ----> (LOAD) 	"  %38 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
+60 ----> (NOLD) 	"  %39 = add i32 %38, %35"	(32 bits) : 	INVALID
+61 ----> (NOLD) 	"  store i32 %39, i32* @global_use, align 4"	(32 bits) : 	INVALID
+62 ----> (LOAD) 	"  %40 = load i32, i32* %1, align 4"	(32 bits) : 	-1
+63 ----> (LOAD) 	"  %41 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
+64 ----> (NOLD) 	"  %42 = add i32 %41, 1"	(32 bits) : 	INVALID
+65 ----> (NOLD) 	"  store i32 %42, i32* @local_use_number, align 4"	(32 bits) : 	INVALID
+66 ----> (LOAD) 	"  %43 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
+67 ----> (NOLD) 	"  %44 = add i32 %43, %40"	(32 bits) : 	INVALID
+68 ----> (NOLD) 	"  store i32 %44, i32* @global_use, align 4"	(32 bits) : 	INVALID
+69 ----> (NOLD) 	"  %45 = mul nsw i32 %35, %40"	(32 bits) : 	INVALID
+70 ----> (NOLD) 	"  store i32 %45, i32* %2, align 4"	(32 bits) : 	INVALID
+71 ----> (LOAD) 	"  %46 = load i32, i32* @local_use_number.2, align 4"	(32 bits) : 	-1
+72 ----> (LOAD) 	"  %47 = load i32, i32* @local_def.1, align 4"	(32 bits) : 	-1
+73 ----> (LOAD) 	"  %48 = load i32, i32* @global_def, align 4"	(32 bits) : 	-1
+74 ----> (NOLD) 	"  %49 = mul i32 %47, %46"	(32 bits) : 	INVALID
+75 ----> (NOLD) 	"  %50 = add i32 %48, %49"	(32 bits) : 	INVALID
+76 ----> (NOLD) 	"  store i32 0, i32* @local_use_number.2, align 4"	(32 bits) : 	INVALID
+77 ----> (NOLD) 	"  store i32 %50, i32* @global_def, align 4"	(32 bits) : 	INVALID
+78 ----> (NOLD) 	"  store i32 %45, i32* @local_def.1, align 4"	(32 bits) : 	INVALID
+79 ----> (LOAD) 	"  %51 = load i32, i32* %2, align 4"	(32 bits) : 	-1
+80 ----> (LOAD) 	"  %52 = load i32, i32* @local_use_number.2, align 4"	(32 bits) : 	-1
+81 ----> (NOLD) 	"  %53 = add i32 %52, 1"	(32 bits) : 	INVALID
+82 ----> (NOLD) 	"  store i32 %53, i32* @local_use_number.2, align 4"	(32 bits) : 	INVALID
+83 ----> (LOAD) 	"  %54 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
+84 ----> (NOLD) 	"  %55 = add i32 %54, %51"	(32 bits) : 	INVALID
+85 ----> (NOLD) 	"  store i32 %55, i32* @global_use, align 4"	(32 bits) : 	INVALID
+86 ----> (LOAD) 	"  %56 = load i32, i32* %1, align 4"	(32 bits) : 	-1
+87 ----> (LOAD) 	"  %57 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
+88 ----> (NOLD) 	"  %58 = add i32 %57, 1"	(32 bits) : 	INVALID
+89 ----> (NOLD) 	"  store i32 %58, i32* @local_use_number, align 4"	(32 bits) : 	INVALID
+90 ----> (LOAD) 	"  %59 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
+91 ----> (NOLD) 	"  %60 = add i32 %59, %56"	(32 bits) : 	INVALID
+92 ----> (NOLD) 	"  store i32 %60, i32* @global_use, align 4"	(32 bits) : 	INVALID
+93 ----> (NOLD) 	"  %61 = sub nsw i32 %51, %56"	(32 bits) : 	INVALID
+94 ----> (NOLD) 	"  store i32 %61, i32* %3, align 4"	(32 bits) : 	INVALID
+95 ----> (LOAD) 	"  %62 = load i32, i32* @local_use_number.4, align 4"	(32 bits) : 	-1
+96 ----> (LOAD) 	"  %63 = load i32, i32* @local_def.3, align 4"	(32 bits) : 	-1
+97 ----> (LOAD) 	"  %64 = load i32, i32* @global_def, align 4"	(32 bits) : 	-1
+98 ----> (NOLD) 	"  %65 = mul i32 %63, %62"	(32 bits) : 	INVALID
+99 ----> (NOLD) 	"  %66 = add i32 %64, %65"	(32 bits) : 	INVALID
+100 ----> (NOLD) 	"  store i32 0, i32* @local_use_number.4, align 4"	(32 bits) : 	INVALID
+101 ----> (NOLD) 	"  store i32 %66, i32* @global_def, align 4"	(32 bits) : 	INVALID
+102 ----> (NOLD) 	"  store i32 %61, i32* @local_def.3, align 4"	(32 bits) : 	INVALID
+103 ----> (LOAD) 	"  %67 = load i32, i32* %2, align 4"	(32 bits) : 	-1
+104 ----> (LOAD) 	"  %68 = load i32, i32* @local_use_number.2, align 4"	(32 bits) : 	-1
+105 ----> (NOLD) 	"  %69 = add i32 %68, 1"	(32 bits) : 	INVALID
+106 ----> (NOLD) 	"  store i32 %69, i32* @local_use_number.2, align 4"	(32 bits) : 	INVALID
+107 ----> (LOAD) 	"  %70 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
+108 ----> (NOLD) 	"  %71 = add i32 %70, %67"	(32 bits) : 	INVALID
+109 ----> (NOLD) 	"  store i32 %71, i32* @global_use, align 4"	(32 bits) : 	INVALID
+110 ----> (LOAD) 	"  %72 = load i32, i32* %1, align 4"	(32 bits) : 	-1
+111 ----> (LOAD) 	"  %73 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
+112 ----> (NOLD) 	"  %74 = add i32 %73, 1"	(32 bits) : 	INVALID
+113 ----> (NOLD) 	"  store i32 %74, i32* @local_use_number, align 4"	(32 bits) : 	INVALID
+114 ----> (LOAD) 	"  %75 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
+115 ----> (NOLD) 	"  %76 = add i32 %75, %72"	(32 bits) : 	INVALID
+116 ----> (NOLD) 	"  store i32 %76, i32* @global_use, align 4"	(32 bits) : 	INVALID
+117 ----> (NOLD) 	"  %77 = sdiv i32 %67, %72"	(32 bits) : 	INVALID
+118 ----> (NOLD) 	"  store i32 %77, i32* %2, align 4"	(32 bits) : 	INVALID
+119 ----> (LOAD) 	"  %78 = load i32, i32* @local_use_number.2, align 4"	(32 bits) : 	-1
+120 ----> (LOAD) 	"  %79 = load i32, i32* @local_def.1, align 4"	(32 bits) : 	-1
+121 ----> (LOAD) 	"  %80 = load i32, i32* @global_def, align 4"	(32 bits) : 	-1
+122 ----> (NOLD) 	"  %81 = mul i32 %79, %78"	(32 bits) : 	INVALID
+123 ----> (NOLD) 	"  %82 = add i32 %80, %81"	(32 bits) : 	INVALID
+124 ----> (NOLD) 	"  store i32 0, i32* @local_use_number.2, align 4"	(32 bits) : 	INVALID
+125 ----> (NOLD) 	"  store i32 %82, i32* @global_def, align 4"	(32 bits) : 	INVALID
+126 ----> (NOLD) 	"  store i32 %77, i32* @local_def.1, align 4"	(32 bits) : 	INVALID
+127 ----> (LOAD) 	"  %83 = load i32, i32* %1, align 4"	(32 bits) : 	-1
+128 ----> (LOAD) 	"  %84 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
+129 ----> (NOLD) 	"  %85 = add i32 %84, 1"	(32 bits) : 	INVALID
+130 ----> (NOLD) 	"  store i32 %85, i32* @local_use_number, align 4"	(32 bits) : 	INVALID
+131 ----> (LOAD) 	"  %86 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
+132 ----> (NOLD) 	"  %87 = add i32 %86, %83"	(32 bits) : 	INVALID
+133 ----> (NOLD) 	"  store i32 %87, i32* @global_use, align 4"	(32 bits) : 	INVALID
+134 ----> (LOAD) 	"  %88 = load i32, i32* %1, align 4"	(32 bits) : 	-1
+135 ----> (LOAD) 	"  %89 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
+136 ----> (NOLD) 	"  %90 = add i32 %89, 1"	(32 bits) : 	INVALID
+137 ----> (NOLD) 	"  store i32 %90, i32* @local_use_number, align 4"	(32 bits) : 	INVALID
+138 ----> (LOAD) 	"  %91 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
+139 ----> (NOLD) 	"  %92 = add i32 %91, %88"	(32 bits) : 	INVALID
+140 ----> (NOLD) 	"  store i32 %92, i32* @global_use, align 4"	(32 bits) : 	INVALID
+141 ----> (NOLD) 	"  %93 = mul nsw i32 %83, %88"	(32 bits) : 	INVALID
+142 ----> (NOLD) 	"  store i32 %93, i32* %1, align 4"	(32 bits) : 	INVALID
+143 ----> (LOAD) 	"  %94 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
+144 ----> (LOAD) 	"  %95 = load i32, i32* @local_def, align 4"	(32 bits) : 	-1
+145 ----> (LOAD) 	"  %96 = load i32, i32* @global_def, align 4"	(32 bits) : 	-1
+146 ----> (NOLD) 	"  %97 = mul i32 %95, %94"	(32 bits) : 	INVALID
+147 ----> (NOLD) 	"  %98 = add i32 %96, %97"	(32 bits) : 	INVALID
+148 ----> (NOLD) 	"  store i32 0, i32* @local_use_number, align 4"	(32 bits) : 	INVALID
+149 ----> (NOLD) 	"  store i32 %98, i32* @global_def, align 4"	(32 bits) : 	INVALID
+150 ----> (NOLD) 	"  store i32 %93, i32* @local_def, align 4"	(32 bits) : 	INVALID
+151 ----> (LOAD) 	"  %99 = load i32, i32* %1, align 4"	(32 bits) : 	-1
+152 ----> (LOAD) 	"  %100 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
+153 ----> (NOLD) 	"  %101 = add i32 %100, 1"	(32 bits) : 	INVALID
+154 ----> (NOLD) 	"  store i32 %101, i32* @local_use_number, align 4"	(32 bits) : 	INVALID
+155 ----> (LOAD) 	"  %102 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
+156 ----> (NOLD) 	"  %103 = add i32 %102, %99"	(32 bits) : 	INVALID
+157 ----> (NOLD) 	"  store i32 %103, i32* @global_use, align 4"	(32 bits) : 	INVALID
+158 ----> (LOAD) 	"  %104 = load i32, i32* %2, align 4"	(32 bits) : 	-1
+159 ----> (LOAD) 	"  %105 = load i32, i32* @local_use_number.2, align 4"	(32 bits) : 	-1
+160 ----> (NOLD) 	"  %106 = add i32 %105, 1"	(32 bits) : 	INVALID
+161 ----> (NOLD) 	"  store i32 %106, i32* @local_use_number.2, align 4"	(32 bits) : 	INVALID
+162 ----> (LOAD) 	"  %107 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
+163 ----> (NOLD) 	"  %108 = add i32 %107, %104"	(32 bits) : 	INVALID
+164 ----> (NOLD) 	"  store i32 %108, i32* @global_use, align 4"	(32 bits) : 	INVALID
+165 ----> (LOAD) 	"  %109 = load i32, i32* %3, align 4"	(32 bits) : 	-1
+166 ----> (LOAD) 	"  %110 = load i32, i32* @local_use_number.4, align 4"	(32 bits) : 	-1
+167 ----> (NOLD) 	"  %111 = add i32 %110, 1"	(32 bits) : 	INVALID
+168 ----> (NOLD) 	"  store i32 %111, i32* @local_use_number.4, align 4"	(32 bits) : 	INVALID
+169 ----> (LOAD) 	"  %112 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
+170 ----> (NOLD) 	"  %113 = add i32 %112, %109"	(32 bits) : 	INVALID
+171 ----> (NOLD) 	"  store i32 %113, i32* @global_use, align 4"	(32 bits) : 	INVALID
+172 ----> (NOLD) 	"  %114 = call i32 (i8*, ...) @printf(i8* noundef getelementptr inbounds ([10 x i8], [10 x i8]* @.str, i64 0, i64 0), i32 noundef %99, i32 noundef %104, i32 noundef %109)"	(32 bits) : 	INVALID
+173 ----> (LOAD) 	"  %115 = load i32, i32* @local_use_number, align 4"	(32 bits) : 	-1
+174 ----> (LOAD) 	"  %116 = load i32, i32* @local_def, align 4"	(32 bits) : 	-1
+175 ----> (LOAD) 	"  %117 = load i32, i32* @global_def, align 4"	(32 bits) : 	-1
+176 ----> (NOLD) 	"  %118 = mul i32 %116, %115"	(32 bits) : 	INVALID
+177 ----> (NOLD) 	"  %119 = add i32 %117, %118"	(32 bits) : 	INVALID
+178 ----> (NOLD) 	"  store i32 0, i32* @local_use_number, align 4"	(32 bits) : 	INVALID
+179 ----> (NOLD) 	"  store i32 %119, i32* @global_def, align 4"	(32 bits) : 	INVALID
+180 ----> (NOLD) 	"  store i32 0, i32* @local_def, align 4"	(32 bits) : 	INVALID
+181 ----> (LOAD) 	"  %120 = load i32, i32* @local_use_number.2, align 4"	(32 bits) : 	-1
+182 ----> (LOAD) 	"  %121 = load i32, i32* @local_def.1, align 4"	(32 bits) : 	-1
+183 ----> (LOAD) 	"  %122 = load i32, i32* @global_def, align 4"	(32 bits) : 	-1
+184 ----> (NOLD) 	"  %123 = mul i32 %121, %120"	(32 bits) : 	INVALID
+185 ----> (NOLD) 	"  %124 = add i32 %122, %123"	(32 bits) : 	INVALID
+186 ----> (NOLD) 	"  store i32 0, i32* @local_use_number.2, align 4"	(32 bits) : 	INVALID
+187 ----> (NOLD) 	"  store i32 %124, i32* @global_def, align 4"	(32 bits) : 	INVALID
+188 ----> (NOLD) 	"  store i32 0, i32* @local_def.1, align 4"	(32 bits) : 	INVALID
+189 ----> (LOAD) 	"  %125 = load i32, i32* @local_use_number.4, align 4"	(32 bits) : 	-1
+190 ----> (LOAD) 	"  %126 = load i32, i32* @local_def.3, align 4"	(32 bits) : 	-1
+191 ----> (LOAD) 	"  %127 = load i32, i32* @global_def, align 4"	(32 bits) : 	-1
+192 ----> (NOLD) 	"  %128 = mul i32 %126, %125"	(32 bits) : 	INVALID
+193 ----> (NOLD) 	"  %129 = add i32 %127, %128"	(32 bits) : 	INVALID
+194 ----> (NOLD) 	"  store i32 0, i32* @local_use_number.4, align 4"	(32 bits) : 	INVALID
+195 ----> (NOLD) 	"  store i32 %129, i32* @global_def, align 4"	(32 bits) : 	INVALID
+196 ----> (NOLD) 	"  store i32 0, i32* @local_def.3, align 4"	(32 bits) : 	INVALID
+197 ----> (LOAD) 	"  %130 = load i32, i32* @global_def, align 4"	(32 bits) : 	-1
+198 ----> (LOAD) 	"  %131 = load i32, i32* @global_use, align 4"	(32 bits) : 	-1
+199 ----> (NOLD) 	"  %132 = icmp ne i32 %130, %131"	(32 bits) : 	INVALID
+200 ----> (NOLD) 	"  br i1 %132, label %133, label %134"	(32 bits) : 	INVALID
+1 ----> (NOLD) 	"  ret i32 1"	(32 bits) : 	INVALID
+1 ----> (NOLD) 	"  ret i32 0"	(32 bits) : 	INVALID

@@ -24,7 +24,7 @@ using namespace llvm;
 
 static const std::string ENV_FILENAME = "inject_env.txt";
 
-typedef std::map<unsigned int, std::set<unsigned short>> InjectionMap;
+typedef std::map<std::pair<unsigned int, unsigned int>, std::set<unsigned short>> InjectionMap;
 
 std::vector<InjectionMap> parse_import_file(const std::string& import_filename)
 {
@@ -41,11 +41,14 @@ std::vector<InjectionMap> parse_import_file(const std::string& import_filename)
     std::string line;
     std::getline(import_file, line);
     std::string str;
+    if (line.substr(line.find("(") + 1, line.find(")") - line.find("(") - 1) == std::string("NOLD")) { continue; }
     str = line.substr(line.find(":") + 1);
     while (str.find(")") != std::string::npos)
     {
-      std::string item = str.substr(str.find("(") + 1, str.find(")"));
+      std::string item = str.substr(str.find("(") + 1);
       std::stringstream ss(item);
+      unsigned int inst_index;
+      ss >> inst_index;
       unsigned int iteration;
       ss >> iteration;
       std::set<unsigned short> bits_to_flip;
@@ -54,7 +57,7 @@ std::vector<InjectionMap> parse_import_file(const std::string& import_filename)
       {
         bits_to_flip.insert(bit);
       }
-      inj_map[iteration] = bits_to_flip;
+      inj_map[std::make_pair(inst_index, iteration)] = bits_to_flip;
       str = str.substr(str.find(")") + 1);
     }
     injections.push_back(inj_map);
@@ -109,24 +112,42 @@ struct InjectionPass : public PassInfoMixin<InjectionPass> {
       injection_maps = parse_import_file(env.import_filename);
     }
 
+    std::map<unsigned int, Instruction*> index_to_instruction;
+
 	  for (Function &F: M.getFunctionList())
     {
       std::list<LoadInst*> load_insts;
       for (BasicBlock& BB: F)
       {
-        for (const Instruction &inst: BB)
+        unsigned int index = 1;
+        for (Instruction &inst: BB)
         {
           Value* V = (Value*) &inst;
+          bool load = false;
           if (LoadInst* load_inst = dyn_cast<LoadInst>(V))
           {
             load_insts.push_back(load_inst);
-            if (env.create_template)
-            {
-              std::string instr_str;
-              llvm::raw_string_ostream(instr_str) << *load_inst;
-              template_file << "\"" << instr_str << "\"\t(" << "32" << " bits)" << " : \t-1\n";
-            }
+            load = true;
           }
+          index_to_instruction[index] = &inst;
+
+          if (env.create_template)
+          {
+            std::string instr_str;
+            llvm::raw_string_ostream(instr_str) << inst;
+            template_file << index << " ----> ";
+            std::string default_val;
+            if (load)
+            {
+              template_file << "(LOAD)";
+              default_val = "-1";
+            } else {
+              template_file << "(NOLD)";
+              default_val = "INVALID";
+            }
+            template_file << " \t\"" << instr_str << "\"\t(" << "32" << " bits)" << " : \t" << default_val << "\n";
+          }
+          index++;
         }
       }
       template_file.close();
@@ -179,7 +200,9 @@ struct InjectionPass : public PassInfoMixin<InjectionPass> {
 
         for (auto injection_pair: inj_map)
         {
-          unsigned int iteration_num = injection_pair.first;
+          unsigned int instruction_num = injection_pair.first.first;
+          unsigned int iteration_num = injection_pair.first.second;
+          
           std::set<unsigned short> bits_to_flip = injection_pair.second;
 
           unsigned int bit_flip_value = 0;
@@ -191,6 +214,25 @@ struct InjectionPass : public PassInfoMixin<InjectionPass> {
 
           iteration_numbers.push_back((Constant*) ConstantInt::get(F.getContext(), APInt(32,iteration_num)));
           injection_values.push_back((Constant*) ConstantInt::get(F.getContext(), APInt(32,bit_flip_value)));
+
+          if (instruction_num != 0)
+          {
+            Instruction* remote_location = index_to_instruction[instruction_num];
+
+            if (remote_location != load_inst)
+            {
+              PointerType* data_ptr_type = PointerType::get(load_inst->getType(), 0);
+              GlobalVariable* pointer = new GlobalVariable(M, data_ptr_type, false, GlobalValue::InternalLinkage, nullptr, "remote_injection_ptr");
+              pointer->setAlignment(Align());
+              pointer->setInitializer(ConstantPointerNull::get(data_ptr_type));
+              
+              Instruction* remote_load_ptr = new LoadInst(data_ptr_type, pointer, "", remote_location);
+              LoadInst* remote_load_value = new LoadInst(load_inst->getType(), remote_load_ptr, "", remote_load_ptr->getNextNode());
+              Instruction* update_remote_ptr = new StoreInst(load_inst->getPointerOperand(), pointer, "", load_inst->getNextNode());
+
+              load_inst = remote_load_value;
+            }
+          }
         }
 
         llvm::Constant* iteration_number_array_init = llvm::ConstantArray::get(iteration_array_type, iteration_numbers);
