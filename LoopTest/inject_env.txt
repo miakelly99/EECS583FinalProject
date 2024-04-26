@@ -1,0 +1,4 @@
+0
+loop_inject_template.txt
+1
+tmp/loop_inject.txt
