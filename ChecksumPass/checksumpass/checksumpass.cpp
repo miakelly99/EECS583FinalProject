@@ -12,12 +12,96 @@
 #include <iostream>
 #include <vector>
 #include <list>
+#include <map>
 
 using namespace llvm;
+
+int MINIMUM_LINE_GAP = 20;
 
 namespace {
 
 struct ChecksumPass : public PassInfoMixin<ChecksumPass> {
+
+  int calculateDistanceBetweenInstructions(Instruction *instr1, Instruction *instr2) {
+    // Return distance where instructions are in the same basic block
+    int distance = 0;
+    for (auto it = instr1->getIterator(); it != instr2->getIterator(); ++it) {
+        ++distance;
+    }
+    return distance;
+  }
+
+  Instruction* getInstructionDistanceAway(Instruction *instr, int distance){
+    // Return the instruction that is "distance" lines from instr
+    // This depends on there being at least distance instructions left in current BB
+    int current_distance = 0;
+    Instruction *curr_instr = instr;
+    while (current_distance < distance){
+      curr_instr = curr_instr->getNextNode();
+      current_distance++;
+    }
+    return curr_instr;
+  }
+
+  std::list<Instruction*> getNOPChecksumInsertionLocations(AllocaInst *allocaInst, int minimum_line_gap, bool verbose=false){
+    // List of pointers to instructions where we need to insert a checksum
+    std::list<Instruction*> outputInstructions;
+
+    Instruction *prevInst = nullptr;
+
+    for (Use& use: allocaInst->uses()){
+
+      if (Instruction* inst = dyn_cast<Instruction>(use.getUser()))
+      {
+        if (LoadInst* load_inst = dyn_cast<LoadInst>(inst))
+        {
+          if (allocaInst != load_inst->getPointerOperand()) { continue; }
+          //If there was a previous use, compare to see if we need to inject another check
+          if (prevInst){
+            int distance = calculateDistanceBetweenInstructions(inst, prevInst);
+            // errs() << "DISTANCE = " << distance << "\n";
+            if (distance >= MINIMUM_LINE_GAP){
+              // Grab instruction from halfway point between the 2 instructions
+              Instruction *halfway_inst = getInstructionDistanceAway(inst, distance / 2);
+              outputInstructions.push_back(halfway_inst);
+              // errs() << "INJECT CHECK BETWEEN ";
+              // inst->print(errs());
+              // errs() << " AND ";
+              // prevInst->print(errs());
+              // errs() << "\n";
+            }
+          }
+        }
+        else if (StoreInst* store_inst = dyn_cast<StoreInst>(inst))
+        {
+          if (allocaInst != store_inst->getPointerOperand()) { continue; }
+            if (prevInst) {
+              int distance = calculateDistanceBetweenInstructions(inst, prevInst);
+
+              if (distance >= MINIMUM_LINE_GAP){
+                // Grab instruction from halfway point between the 2 instructions
+                Instruction *halfway_inst = getInstructionDistanceAway(inst, distance / 2);
+                outputInstructions.push_back(halfway_inst);
+                // errs() << "INJECT CHECK BETWEEN ";
+                // inst->print(errs());
+                // errs() << " AND ";
+                // prevInst->print(errs());
+                // errs() << "\n";
+              }
+            }
+        }
+        prevInst = inst;
+      }
+    }      
+    if (verbose) {
+      for (auto inst : outputInstructions){
+        errs() << "INSERTED LINE: ";
+        inst->print(errs());
+        errs() << "\n";
+      }
+    }
+    return outputInstructions;
+  }
 
   PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
     Type* checksum_type = Type::getInt32Ty(M.getContext());
@@ -37,6 +121,8 @@ struct ChecksumPass : public PassInfoMixin<ChecksumPass> {
     // loop through functions in module
     for (Function &F: M.getFunctionList()) {
 
+      std::map<AllocaInst*, std::list<Instruction*>> nop_checks;
+
       std::list<AllocaInst*> alloca_insts;
       ReturnInst* ret = nullptr;
 
@@ -48,12 +134,15 @@ struct ChecksumPass : public PassInfoMixin<ChecksumPass> {
           // Begin each each, verify checksum
           if (AllocaInst *allocaInst = dyn_cast<AllocaInst>(&instr)) {
             alloca_insts.push_back(allocaInst);
+            nop_checks[allocaInst]; // = getNOPChecksumInsertionLocations(allocaInst, MINIMUM_LINE_GAP);
           }
           else if (ReturnInst* ret_inst = dyn_cast<ReturnInst>(&instr)) {
             ret = ret_inst;
           }
         }
       }
+
+       
 
       for (AllocaInst* allocaInst: alloca_insts)
       {
@@ -98,6 +187,20 @@ struct ChecksumPass : public PassInfoMixin<ChecksumPass> {
           }
         }
 
+        std::list<Instruction*> alloc_nop_checks = nop_checks[allocaInst];
+        
+        /*for (Instruction* nop_check_pt: alloc_nop_checks)
+        {
+          Instruction* load_value = new LoadInst(IntegerType::get(F.getContext(), 32), allocaInst, "", nop_check_pt);
+          Instruction* load_use_num = new LoadInst(use_count_type, local_use_number, "", load_value->getNextNode());
+          Instruction* increment_use_num = BinaryOperator::Create(Instruction::Add, load_use_num, const_one_val, "", load_use_num->getNextNode());
+          Instruction* store_incr_use_num = new StoreInst(increment_use_num, local_use_number, increment_use_num->getNextNode());
+
+          Instruction* load_global_cs = new LoadInst(checksum_type, global_use_checksum, "", store_incr_use_num->getNextNode());
+          Instruction* increment_global_cs = BinaryOperator::Create(Instruction::Add, load_global_cs, load_value, "", load_global_cs->getNextNode());
+          Instruction* store_incr_global_cs = new StoreInst(increment_global_cs, global_use_checksum, increment_global_cs->getNextNode());
+        }*/
+
         Instruction* load_use_num = new LoadInst(use_count_type, local_use_number, "", ret);
         Instruction* load_local_cs = new LoadInst(checksum_type, local_def_checksum, "", load_use_num->getNextNode());
         Instruction* load_global_cs = new LoadInst(checksum_type, global_def_checksum, "", load_local_cs->getNextNode());
@@ -117,8 +220,8 @@ struct ChecksumPass : public PassInfoMixin<ChecksumPass> {
         Instruction* ret_fail = ReturnInst::Create(F.getContext(), const_one_val, unsafe_block);
         ret_fail->getNextNode()->removeFromParent();
       }
-      errs() << M << "\n";
   }
+  errs() << M << "\n";
   return PreservedAnalyses::all();
 }};
 }
