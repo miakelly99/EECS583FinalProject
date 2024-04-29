@@ -14,12 +14,15 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <fstream>
 
 using namespace llvm;
 
+const std::string ENV_FILENAME = "checksum_env.txt";
+
 // PLEASE USE A MINIMUM OF 10 FOR MIA'S SANTIY
 // Other values may be smaller than the code necessary to add a checksum, causing an infinite loop
-unsigned int MINIMUM_LINE_GAP = 20;
+int MINIMUM_LINE_GAP;
 
 namespace {
 
@@ -37,28 +40,29 @@ struct ChecksumPass : public PassInfoMixin<ChecksumPass> {
   std::map<AllocaInst*, std::pair<GlobalVariable*, GlobalVariable*>> alloca_insts;
 
   // Add instructions to ensure minimum distance.
-  void ensure_minimum (Instruction* start_loc, AllocaInst* alloca_inst, unsigned int minimum_line_gap, std::set<LoadInst*>& added_checksum_loads) {
+  void ensure_minimum (Instruction* start_loc, AllocaInst* alloca_inst, int minimum_line_gap, std::set<LoadInst*>& added_checksum_loads) {
+    //errs() << "beginning search at " << *start_loc << " for " << *alloca_inst << "\n";
     if (start_loc == nullptr) { return; }
     Instruction* current_loc = start_loc;
     GlobalVariable* local_def = alloca_insts[alloca_inst].first;
     GlobalVariable* local_use = alloca_insts[alloca_inst].second;
-    while (minimum_line_gap != 0)
+    while (minimum_line_gap > 0)
     {
+      //errs() << "considering inst " << *current_loc << " for " << *alloca_inst << "\n";
+      //errs() << minimum_line_gap << "\n";
       if(current_loc != start_loc)
       {
         if (LoadInst* load_inst = dyn_cast<LoadInst>(current_loc))
         {
-          
           if (alloca_inst == load_inst->getPointerOperand()) { return; }
+          else { minimum_line_gap -= 6; }
         }
         else if (StoreInst* store_inst = dyn_cast<StoreInst>(current_loc))
         {
-          
           if (alloca_inst == store_inst->getPointerOperand()) { return; }
-        }
-      }
-
-      minimum_line_gap -= 1;
+          else { minimum_line_gap -= 8; }
+        } else { minimum_line_gap -= 1; }
+      } else { minimum_line_gap -= 1; }
 
       current_loc = current_loc->getNextNode();
       
@@ -79,19 +83,19 @@ struct ChecksumPass : public PassInfoMixin<ChecksumPass> {
     }
     // add the new load and recursively call the thing
     LoadInst* new_load = new LoadInst(alloca_inst->getAllocatedType(), alloca_inst, "NOP_CHECKSUM_LOAD", current_loc);
-    Instruction* load_use_num = new LoadInst(use_count_type, local_use, "", new_load->getNextNode());
+    /*Instruction* load_use_num = new LoadInst(use_count_type, local_use, "", new_load->getNextNode());
     Instruction* increment_use_num = BinaryOperator::Create(Instruction::Add, load_use_num, const_one_val, "", load_use_num->getNextNode());
     Instruction* store_incr_use_num = new StoreInst(increment_use_num, local_use, increment_use_num->getNextNode());
 
     Instruction* load_global_cs = new LoadInst(checksum_type, global_use_checksum, "", store_incr_use_num->getNextNode());
     Instruction* increment_global_cs = BinaryOperator::Create(Instruction::Add, load_global_cs, new_load, "", load_global_cs->getNextNode());
-    Instruction* store_incr_global_cs = new StoreInst(increment_global_cs, global_use_checksum, increment_global_cs->getNextNode());
+    Instruction* store_incr_global_cs = new StoreInst(increment_global_cs, global_use_checksum, increment_global_cs->getNextNode());*/
     
     added_checksum_loads.insert(new_load);
-    ensure_minimum(load_use_num, alloca_inst, MINIMUM_LINE_GAP, added_checksum_loads);
+    ensure_minimum(new_load->getNextNode(), alloca_inst, MINIMUM_LINE_GAP, added_checksum_loads);
   }
 
-  std::set<LoadInst*> getNOPChecksumInsertionLocations(AllocaInst *allocaInst, unsigned int minimum_line_gap){
+  std::set<LoadInst*> getNOPChecksumInsertionLocations(AllocaInst *allocaInst, int minimum_line_gap){
     // List of instructions where we have created a checksum
     std::set<LoadInst*> added_checksum_loads;
     std::set<Instruction*> instructions_to_consider;
@@ -121,6 +125,12 @@ struct ChecksumPass : public PassInfoMixin<ChecksumPass> {
   }
 
   PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
+    bool add_nops;
+    std::ifstream env_file; env_file.open(ENV_FILENAME);
+    env_file >> add_nops;
+    env_file >> MINIMUM_LINE_GAP;
+    env_file.close();
+
     checksum_type = Type::getInt32Ty(M.getContext());
     use_count_type = Type::getInt32Ty(M.getContext());
 
@@ -161,8 +171,11 @@ struct ChecksumPass : public PassInfoMixin<ChecksumPass> {
 
             alloca_insts[allocaInst] = std::make_pair(local_def_checksum, local_use_number);
 
-            std::set<LoadInst*> added_loads = getNOPChecksumInsertionLocations(allocaInst, MINIMUM_LINE_GAP);
-            added_nop_loads_to_ignore.insert(added_loads.begin(), added_loads.end());
+            if (add_nops)
+            {
+              std::set<LoadInst*> added_loads = getNOPChecksumInsertionLocations(allocaInst, MINIMUM_LINE_GAP);
+              added_nop_loads_to_ignore.insert(added_loads.begin(), added_loads.end());
+            }
           }
           else if (ReturnInst* ret_inst = dyn_cast<ReturnInst>(&instr)) {
             ret = ret_inst;
@@ -181,7 +194,7 @@ struct ChecksumPass : public PassInfoMixin<ChecksumPass> {
           {
             if (LoadInst* load_inst = dyn_cast<LoadInst>(inst))
             {
-              if (allocaInst != load_inst->getPointerOperand() || added_nop_loads_to_ignore.find(load_inst) != added_nop_loads_to_ignore.end()) { continue; }
+              if (allocaInst != load_inst->getPointerOperand()) { continue; }
               Instruction* load_use_num = new LoadInst(use_count_type, local_use_number, "", load_inst->getNextNode());
               Instruction* increment_use_num = BinaryOperator::Create(Instruction::Add, load_use_num, const_one_val, "", load_use_num->getNextNode());
               Instruction* store_incr_use_num = new StoreInst(increment_use_num, local_use_number, increment_use_num->getNextNode());

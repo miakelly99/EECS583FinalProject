@@ -1,2 +1,0 @@
-Sum starts at 0
-Sum is 21803
